@@ -84,6 +84,9 @@ def get_default_conv_config(
     config = _default_conv_config
     # if training:
     #     config.ifsort = True
+    config.ifsort = False
+    config.split_mask_num = 1
+    config.dataflow = Dataflow.ImplicitGEMM
     if conv_mode == ConvMode.mode0:
         pass
     elif conv_mode == ConvMode.mode1:
@@ -91,4 +94,6 @@ def get_default_conv_config(
     elif conv_mode == ConvMode.mode2:
         config.ifsort = True
         config.split_mask_num = 3
+    elif conv_mode == ConvMode.mode3:
+        config.dataflow = Dataflow.GatherScatter
     return config

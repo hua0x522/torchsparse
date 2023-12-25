@@ -38,6 +38,7 @@ class ConvMode(Enum):
     mode0 = 0  # split=0 fwd & split=3 bwd
     mode1 = 1  # split=1 fwd & split=3 bwd
     mode2 = 2  # split=3 fwd & split=3 bwd
+    mode3 = 3  # GatherScatter
 
 
 _global_conv_mode = ConvMode.mode0
@@ -57,6 +58,8 @@ def set_conv_mode(conv_mode):
             _global_conv_mode = ConvMode.mode1
         elif conv_mode == 2:
             _global_conv_mode = ConvMode.mode2
+        elif conv_mode == 3:
+            _global_conv_mode = ConvMode.mode3
         else:
             assert 0, f"Undefined conv_mode:{conv_mode}"
     elif isinstance(conv_mode, ConvMode):

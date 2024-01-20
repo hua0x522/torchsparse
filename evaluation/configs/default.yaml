@@ -1,0 +1,4 @@
+workers_per_gpu: 4
+evaluation_frequency: 1
+conv: 0
+hardware: 2080ti

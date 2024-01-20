@@ -1,0 +1,8 @@
+dataset:
+  name: nuscenes-lidarseg
+  root: benchmarks/nuscenes
+  max_saver: 'mIoU'
+  version: 'v1.0-trainval'
+  max_sweeps: 1
+  max_points: 60000
+  num_classes: 32

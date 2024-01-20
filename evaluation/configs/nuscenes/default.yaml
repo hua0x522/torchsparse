@@ -1,0 +1,9 @@
+dataset:
+  name: nuscenes
+  root: benchmarks/nuscenes
+  max_saver: 'mAP'
+  #version: 'v1.0-mini' 
+  version: 'v1.0-trainval'
+  max_sweeps: 10
+  train_max_points: 60000
+  val_max_points: 60000

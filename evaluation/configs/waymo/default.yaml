@@ -1,0 +1,8 @@
+evaluation_frequency: 1
+dataset:
+  name: waymo
+  root: benchmarks/waymo
+  max_saver: 'mAPH_L2'
+  max_sweeps: 3
+  train_max_points: 150000
+  val_max_points: 150000

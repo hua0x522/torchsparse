@@ -1,0 +1,8 @@
+dataset:
+  name: semantic-kitti
+  root: benchmarks/semantic-kitti
+  max_saver: 'mIoU'
+  version: 'v1.0-trainval'
+  max_sweeps: 1
+  max_points: 80000
+  num_classes: 19

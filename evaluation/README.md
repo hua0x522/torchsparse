@@ -1,4 +1,4 @@
-# TorchSparse Benchmark Code Usage
+# TorchSparse++ Benchmark Code Usage
 
 You will be able to directly run commands look like
 
@@ -16,4 +16,10 @@ OMP_NUM_THREADS=1 python evaluate.py
 
 ```
 
+fp32 and tf32 precisions are also supported:
 
+```bash
+
+OMP_NUM_THREADS=1 python evaluate.py --precision fp32
+
+```

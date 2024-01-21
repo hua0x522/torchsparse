@@ -3,6 +3,8 @@ import torch.nn as nn
 import torchsparse.nn as spnn
 import core.models.modules.wrapper as wrapper
 from core.models.modules.layers_3d import SparseConvBlock, SparseDeConvBlock, SparseResBlock
+from torchsparse.utils import make_ntuple
+
 
 class MinkUNet(nn.Module):
     def __init__(self, backend='torchsparse', **kwargs):
@@ -97,7 +99,7 @@ class MinkUNet(nn.Module):
                 nn.init.constant_(m.bias, 0)
 
     def forward(self, x):
-        x = x['pts_input']
+        # x = x['pts_input']
         x0 = self.stem(x)
         x1 = self.stage1(x0)
         x2 = self.stage2(x1)
@@ -107,6 +109,13 @@ class MinkUNet(nn.Module):
         y1 = self.up1[0](x4)
         y1 = self.wrapper.cat([y1, x3])
         y1 = self.up1[1](y1)
+
+        # print_shape("x0", x0, self.backend)
+        # print_shape("x1", x1, self.backend)
+        # print_shape("x2", x2, self.backend)
+        # print_shape("x3", x3, self.backend)
+        # print_shape("x4", x4, self.backend)
+        # print_shape("y1", y1, self.backend)
         
         y2 = self.up2[0](y1)
         y2 = self.wrapper.cat([y2, x2])
@@ -120,6 +129,16 @@ class MinkUNet(nn.Module):
         y4 = self.wrapper.cat([y4, x0])
         y4 = self.up4[1](y4)
 
+        # if self.backend == 'ME':
+        #     print('y4')
+        #     print(y4.coordinate_manager)
+
+        # if self.backend == 'torchsparse':
+        #     print('y4')
+        #     kmap = y4.kmaps.get((y4.stride, make_ntuple(3, ndim=3), make_ntuple(1, ndim=3), \
+        #         make_ntuple(1, ndim=3)))
+        #     print(sum(kmap[1].tolist()))
+
 
         if self.backend != 'spconv':
             out = self.classifier(y4.F)
@@ -129,3 +148,8 @@ class MinkUNet(nn.Module):
         return out
 
 
+def print_shape(msg, x, backend):
+    if backend == 'torchsparse':
+        print(msg, x.F.shape)
+    else:
+        print(msg, x.features.shape)

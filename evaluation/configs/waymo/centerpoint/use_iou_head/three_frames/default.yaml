@@ -1,0 +1,9 @@
+dataset:
+  max_sweeps: 3
+  train_max_points: 240000
+  val_max_points: 240000
+  pc_area_scope: [[-75.2, 75.2], [-4, 2], [-75.2, 75.2]]
+  rotation_bound: [-0.78539816, 0.78539816]
+  scale_bound: [0.95, 1.05]
+  translation_std: 0.5
+

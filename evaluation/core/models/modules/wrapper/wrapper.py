@@ -36,5 +36,5 @@ class Wrapper():
         if self.backend != 'spconv':
             return nn.Sequential(*args)
         else:
-            import spconv
+            import spconv.pytorch as spconv
             return spconv.SparseSequential(*args)

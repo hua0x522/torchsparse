@@ -11,7 +11,7 @@ def cat(*args, backend: str = 'torchsparse') -> None:
             args = args[0]
         return ME.cat(*args)
     elif backend == 'spconv':
-        import spconv
+        import spconv.pytorch as spconv
         def spconv_cat(input_list):
             assert len(input_list) > 0
             inputs = input_list[0]

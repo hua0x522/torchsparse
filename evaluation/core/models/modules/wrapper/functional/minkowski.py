@@ -93,7 +93,6 @@ class MyMinkowskiConvolution(ME.MinkowskiConvolution):
                 out_coordinate_map_key,
                 input._manager,
             )
-
             return SparseTensor(
                 out,
                 coordinate_map_key=out_coordinate_map_key,

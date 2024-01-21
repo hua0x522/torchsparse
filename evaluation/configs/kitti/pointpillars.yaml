@@ -1,0 +1,75 @@
+dataset:
+  max_points: -1
+
+
+model:
+  name: pointpillars
+  pc_area_scope: [[-39.68, 39.68], [-1, 3], [0, 69.12]]
+  box_code_cfg: 
+    code_size: 7
+    encode_angle_by_sincos: False
+  in_channels: 4
+  voxelization_cfg:
+    voxel_size: [0.16, 4, 0.16]
+    max_number_of_voxels: [16000, 40000]
+    max_points_per_voxel: 32
+  proposal_stage: 1
+  negative_anchor_threshold: [0.45, 0.35, 0.3]
+  positive_anchor_threshold: [0.55, 0.45, 0.4]
+  use_multihead: False
+  use_direction_classifier: False
+  cls_weight: 1.0
+  reg_weight: 2.0
+  dir_weight: 0.2
+  pos_cls_weight: 1.0
+  neg_cls_weight: 2.0
+  dir_offset: 0.785398
+  dir_limit_offset: 0.0
+  num_dir_bins: 2
+  last_kernel_size: 1
+  reg_config:
+    num_middle_layers: 0
+    mid_channels: 64
+    reg_list:
+      box: 6
+  backbone_2d_configs: 
+    num_channels: [64, 128, 256]
+    layer_nums: [3, 5, 5]
+    stride: [2, 2, 2]
+    up_num_channels: [128, 128, 128]
+    up_stride: [1, 2, 4]
+  
+  loss_cfg:
+    beta: 0.1111111111111111
+    code_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]    
+
+  nms_configs:
+    roi_threshold: 0.1
+    nms_threshold: 0.01
+    joint_nms: False
+    before_nms_max: 4096
+    after_nms_max: 500
+  
+  regress_ignored_anchors: False
+  bn:
+    momentum: 0.01
+    eps: 0.001
+
+num_epochs: 80
+batch_size: 32
+
+criterion:
+  name: sigmoid-focal
+  gamma: 2.0
+  alpha: 0.25
+
+optimizer:
+  name: adam_onecycle
+  lr: 0.003
+  weight_decay: 0.01
+
+scheduler:
+  name: onecycle
+  momentums: [0.95, 0.85]
+  div_factor: 10
+  pct_start: 0.4

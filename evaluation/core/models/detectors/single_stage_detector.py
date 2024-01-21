@@ -212,12 +212,14 @@ class SingleStageDetector(nn.Module):
                 nms_threshold=0.01,
                 gt_scoring=False,
                 joint_nms=True):
-        x = inputs['pts_input']
+        # x = inputs['pts_input']
+        x = inputs
         
         #torch.cuda.synchronize()
         #st = time.time()
 
         features = self.encoder(x)[-1]
+        return
         
         #torch.cuda.synchronize()
         #ed = time.time()

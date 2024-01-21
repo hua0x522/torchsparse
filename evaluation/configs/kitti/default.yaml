@@ -1,0 +1,6 @@
+dataset:
+  name: kitti
+  root: /dataset/kitti-detection
+  max_points: 16384
+  max_saver: ap40/mean
+

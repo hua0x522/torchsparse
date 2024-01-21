@@ -14,7 +14,8 @@ __all__ = ['Config', 'configs']
 class Config(dict):
     def __getattr__(self, key: str) -> Any:
         if key not in self:
-            raise AttributeError(key)
+            # raise AttributeError(key)
+            return None
         return self[key]
 
     def __setattr__(self, key: str, value: Any) -> None:

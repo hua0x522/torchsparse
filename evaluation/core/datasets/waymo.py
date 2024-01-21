@@ -32,6 +32,8 @@ class Waymo(DetectionDataset):
         return len(self.infos)
 
     def __getitem__(self, index):
+
+        # index = 0
         points = self.get_lidar_with_sweeps(index, self.max_sweeps)
         points = self.augmentor(dict(points=points, pts_rect=points))['points']
 

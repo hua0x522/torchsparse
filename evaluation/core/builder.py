@@ -10,7 +10,6 @@ __all__ = [
     'make_dataset', 'make_model'
 ]
 
-
 def make_dataset(n_sample=-1):
     if configs.dataset.name == 'kitti':
         from .datasets import KITTI

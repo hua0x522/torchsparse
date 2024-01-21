@@ -1,0 +1,4 @@
+model:
+  backbone_2d_configs: 
+    layer_nums: [4, 4]
+    use_scconv: True 

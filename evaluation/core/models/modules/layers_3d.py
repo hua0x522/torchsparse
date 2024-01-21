@@ -2,6 +2,8 @@ from torch import nn
 from torchsparse import nn as spnn
 from typing import Union
 import core.models.modules.wrapper as wrapper
+import time
+import torch
 
 
 __all__ = ['SparseConvBlock', 'SparseDeConvBlock', 'SparseResBlock']
@@ -35,7 +37,13 @@ class SparseConvBlock(nn.Module):
         )
 
     def forward(self, x):
-        return self.net(x)
+        # torch.cuda.synchronize()
+        # st = time.time()
+        out = self.net(x)
+        # torch.cuda.synchronize()
+        # ed = time.time()
+        # print(self.backend, (ed-st) * 1000)
+        return out
 
 
 
@@ -122,10 +130,24 @@ class SparseResBlock(nn.Module):
 
     def forward(self, x):
         if self.backend != 'spconv':
+            # torch.cuda.synchronize()
+            # st = time.time()
+
             x = self.relu(self.net(x) + self.downsample(x))
+
+            # torch.cuda.synchronize()
+            # ed = time.time()
+            # print(self.backend, (ed-st) * 1000)
             return x
         else:
+            # torch.cuda.synchronize()
+            # st = time.time()
+
             x_temp = self.net(x)
-            x_temp.features += self.downsample(x).features
+            x_temp = x_temp.replace_feature(x_temp.features + self.downsample(x).features)
             out = self.wrapper.sequential(self.relu)(x_temp)
+
+            # torch.cuda.synchronize()
+            # ed = time.time()
+            # print(self.backend, (ed-st) * 1000)
             return out
